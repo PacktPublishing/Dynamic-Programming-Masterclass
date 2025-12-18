@@ -1,0 +1,43 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+// A very large number defined as infinity
+int INF = 999999;
+
+int maxProfit(int Price[], int n){
+
+    // Initializing all the arrays and variables
+    int Min_Uptil[n];
+    int Max_Profit[n];
+    int highest_profit = -INF;
+
+    // Min. price uptil 0'th day is Price[0]
+    Min_Uptil[0] = Price[0];
+
+    // Filling the Min_Uptil array
+    for(int i = 1; i <= (n-1); i++ ){
+        Min_Uptil[i] = min( Min_Uptil[i-1] , Price[i] );
+    }
+
+    // Filling the Max_Profit array
+    for(int i = 0; i <= (n-1) ; i++ ){
+        Max_Profit[i] = Price[i] - Min_Uptil[i];
+        // If Max_Profit[i] is the max. of all
+        if( highest_profit < Max_Profit[i] ){
+            highest_profit = Max_Profit[i];
+        }
+    }
+
+    return highest_profit;
+}
+
+int main(){
+
+    int Price[] = {8, 1, 2, 4, 6, 3};
+    int n = sizeof(Price)/sizeof(Price[0]);
+
+    printf("Maximum profit that we could gain from Price array {8, 1, 2, 4, 6, 3} is: %d.\n",  maxProfit(Price, n) );
+
+    return 0;
+}

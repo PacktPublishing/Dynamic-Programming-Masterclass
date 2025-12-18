@@ -1,0 +1,40 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+// Initializing Sum_Until array globally with large integer value
+int Sum_Until[100000];
+
+// Considering 'n' is not equal to 0
+void preProcessing(int my_array[], int n){
+	Sum_Until[0] = my_array[0];
+	for(int itr = 1; itr <= n - 1; itr++){
+		Sum_Until[itr] = Sum_Until[itr-1] + my_array[itr];
+	}
+}
+
+// Assuming we are asking genuine queries and not out of bound i and j values
+int sumRange(int i, int j){
+	if(i == 0){
+		return Sum_Until[j];
+	}
+	else{
+		return ( Sum_Until[j] - Sum_Until[i-1] );
+	}
+}
+
+int main(){
+	
+	int my_array[] = { 1, -2, 3, 10, -8, 0};
+    int n = sizeof(my_array)/sizeof(my_array[0]);
+    
+	// Calling Pre-processing function once
+	preProcessing(my_array, n);
+
+	// These are the different queries that we are asking
+	printf( "Query 1> sumRange(0,2) is equal to:  %d. \n", sumRange(0,2) );
+	printf( "Query 2> sumRange(1,4) is equal to:  %d. \n", sumRange(1,4) );
+	printf( "Query 3> sumRange(3,3) is equal to:  %d. \n", sumRange(3,3) );
+
+	return 0;
+}
